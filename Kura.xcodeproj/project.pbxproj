@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D93A47D929A26E5A00BEB016 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */; };
+		D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595229A28C4C004FD2C9 /* Extensions.swift */; };
 		D9F4454829A16361005D5E65 /* KuraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F4454729A16361005D5E65 /* KuraApp.swift */; };
 		D9F4454A29A16361005D5E65 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F4454929A16361005D5E65 /* ContentView.swift */; };
 		D9F4454C29A16364005D5E65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9F4454B29A16364005D5E65 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D943595229A28C4C004FD2C9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D9F4454429A16361005D5E65 /* Kura.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kura.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F4454729A16361005D5E65 /* KuraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KuraApp.swift; sourceTree = "<group>"; };
 		D9F4454929A16361005D5E65 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +36,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D93A47DA29A274D900BEB016 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D93A47DC29A274FD00BEB016 /* Subviews */,
+				D93A47DB29A274E700BEB016 /* Screens */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D93A47DB29A274E700BEB016 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				D9F4454729A16361005D5E65 /* KuraApp.swift */,
+				D9F4454929A16361005D5E65 /* ContentView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		D93A47DC29A274FD00BEB016 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D943595129A28C2B004FD2C9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D943595229A28C4C004FD2C9 /* Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		D9F4453B29A16361005D5E65 = {
 			isa = PBXGroup;
 			children = (
@@ -53,8 +88,8 @@
 		D9F4454629A16361005D5E65 /* Kura */ = {
 			isa = PBXGroup;
 			children = (
-				D9F4454729A16361005D5E65 /* KuraApp.swift */,
-				D9F4454929A16361005D5E65 /* ContentView.swift */,
+				D943595129A28C2B004FD2C9 /* Helpers */,
+				D93A47DA29A274D900BEB016 /* Views */,
 				D9F4454B29A16364005D5E65 /* Assets.xcassets */,
 				D9F4454D29A16364005D5E65 /* Preview Content */,
 				D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */,
@@ -142,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9F4454A29A16361005D5E65 /* ContentView.swift in Sources */,
+				D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */,
 				D9F4454829A16361005D5E65 /* KuraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +307,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Kura/Preview Content\"";
+				DEVELOPMENT_TEAM = 8F2E94QUZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -285,7 +322,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kura.Kura;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kura.KuraApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -304,6 +341,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Kura/Preview Content\"";
+				DEVELOPMENT_TEAM = 8F2E94QUZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -318,7 +356,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kura.Kura;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kura.KuraApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
