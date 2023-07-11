@@ -13,8 +13,13 @@ struct FeedView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
-            ForEach(posts.dataArray, id: \.self) { post in
-                PostView(post: post)
+
+            // LazyVStack is a magic 🪄
+            // only show the data as they come onto the screen
+            LazyVStack {
+                ForEach(posts.dataArray, id: \.self) { post in
+                    PostView(post: post)
+                }
             }
         })
         .navigationTitle("Feed")
