@@ -26,7 +26,7 @@ struct ContentView: View {
                     Text("Browse")
                 }
             
-            Text("Screen 3")
+            UploadView()
                 .tabItem {
                     Image(systemName: "square.and.arrow.up.fill")
                     Text("Upload")
@@ -40,7 +40,7 @@ struct ContentView: View {
         }
         // set the icon and text color using colorset in Assets
         // use the extensions from Helpers
-        .accentColor(Color.MyTheme.blueColor)
+        .accentColor(Color.MyTheme.purpleColor)
     }
 }
 

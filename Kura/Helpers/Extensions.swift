@@ -16,12 +16,20 @@ extension Color{
             return Color("ColorBlue")
         }
         
-        static var lighBlueColor: Color {
+        static var lightBlueColor: Color {
             return Color("ColorLightBlue")
         }
         
         static var beigeColor: Color {
             return Color("ColorBeige")
+        }
+        
+        static var yellowColor: Color {
+            return Color("ColorYellow")
+        }
+        
+        static var purpleColor: Color {
+            return Color("ColorPurple")
         }
     }
     
