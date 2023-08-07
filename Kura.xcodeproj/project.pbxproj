@@ -10,6 +10,7 @@
 		D92CE9082A80988E005FD994 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9072A80988E005FD994 /* SettingsView.swift */; };
 		D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */; };
 		D92CE90C2A80C577005FD994 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90B2A80C577005FD994 /* SettingsRowView.swift */; };
+		D92CE90E2A80D94F005FD994 /* SettingsEditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */; };
 		D93A47D929A26E5A00BEB016 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */; };
 		D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595229A28C4C004FD2C9 /* Extensions.swift */; };
 		D943595529A28F58004FD2C9 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595429A28F58004FD2C9 /* FeedView.swift */; };
@@ -37,6 +38,7 @@
 		D92CE9072A80988E005FD994 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabelView.swift; sourceTree = "<group>"; };
 		D92CE90B2A80C577005FD994 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditTextView.swift; sourceTree = "<group>"; };
 		D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D943595229A28C4C004FD2C9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D943595429A28F58004FD2C9 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				D9F0D5BE2A74BF0F00A28002 /* PostImageView.swift */,
 				D98A03A82A7E445C005965D5 /* ProfileView.swift */,
 				D92CE9072A80988E005FD994 /* SettingsView.swift */,
+				D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				D9B1AAD52A68DA3700BC7DBB /* CarouselView.swift in Sources */,
 				D9F4454829A16361005D5E65 /* KuraApp.swift in Sources */,
 				D92CE9082A80988E005FD994 /* SettingsView.swift in Sources */,
+				D92CE90E2A80D94F005FD994 /* SettingsEditTextView.swift in Sources */,
 				D92CE90C2A80C577005FD994 /* SettingsRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
