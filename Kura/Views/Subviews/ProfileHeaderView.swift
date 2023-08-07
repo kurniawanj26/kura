@@ -37,7 +37,7 @@ struct ProfileHeaderView: View {
                 // MARK: POSTS
                 VStack(alignment: .center, spacing: 5, content:  {
                 
-                    Text("10")
+                    Text("4")
                         .font(.title2)
                         .fontWeight(.bold)
                     
