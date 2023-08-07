@@ -20,7 +20,7 @@ struct PostView: View {
                 HStack {
                     
                     NavigationLink(
-                        destination: ProfileView(profileDisplayName: post.username, profileUserID: post.userID),
+                        destination: ProfileView(isMyProfile: false, profileDisplayName: post.username, profileUserID: post.userID),
                         label: {
                         Image("dog1")
                             .resizable()
