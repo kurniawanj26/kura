@@ -27,11 +27,15 @@ struct SettingsRowView: View {
             .frame(width: 36, height: 36, alignment: .center)
             
             Text(text)
+                .foregroundColor(.primary)
             
             Spacer()
             
             Image(systemName: "chevron.right")
                 .font(.headline)
+                // need to set the foreground to primary so the color stays black
+                // even when it becomes a navigation link
+                .foregroundColor(.primary)
         }
         .padding(.vertical, 4)
     }
