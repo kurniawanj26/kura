@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // String? means it's optional
+    var currentUserID: String? = nil
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -32,8 +36,16 @@ struct ContentView: View {
                     Text("Upload")
                 }
             
-            NavigationView {
-                ProfileView(isMyProfile: true, profileUserID: "", profileDisplayName: "My Profile")
+            // it's like the conditional render in RN
+            ZStack {
+                if currentUserID != nil {
+                    NavigationView {
+                        ProfileView(isMyProfile: true, profileUserID: "", profileDisplayName: "My Profile")
+                    }
+                } else {
+                    SignUpView()
+                }
+               
             }
                 .tabItem {
                     Image(systemName: "person.fill")
