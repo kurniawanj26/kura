@@ -13,6 +13,8 @@
 		D92CE90E2A80D94F005FD994 /* SettingsEditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */; };
 		D92CE9102A81247F005FD994 /* SettingsEditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */; };
 		D92CE9122A81D63A005FD994 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9112A81D63A005FD994 /* SignUpView.swift */; };
+		D92CE9142A81DBEA005FD994 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9132A81DBEA005FD994 /* OnboardingView.swift */; };
+		D92CE9162A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9152A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift */; };
 		D93A47D929A26E5A00BEB016 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */; };
 		D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595229A28C4C004FD2C9 /* Extensions.swift */; };
 		D943595529A28F58004FD2C9 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595429A28F58004FD2C9 /* FeedView.swift */; };
@@ -43,6 +45,8 @@
 		D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditTextView.swift; sourceTree = "<group>"; };
 		D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditImageView.swift; sourceTree = "<group>"; };
 		D92CE9112A81D63A005FD994 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		D92CE9132A81DBEA005FD994 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		D92CE9152A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButtonCustom.swift; sourceTree = "<group>"; };
 		D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D943595229A28C4C004FD2C9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D943595429A28F58004FD2C9 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 				D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */,
 				D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */,
 				D92CE9112A81D63A005FD994 /* SignUpView.swift */,
+				D92CE9132A81DBEA005FD994 /* OnboardingView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 				D98A03AA2A7E46D6005965D5 /* ProfileHeaderView.swift */,
 				D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */,
 				D92CE90B2A80C577005FD994 /* SettingsRowView.swift */,
+				D92CE9152A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -248,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D943595529A28F58004FD2C9 /* FeedView.swift in Sources */,
+				D92CE9162A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift in Sources */,
 				D9991EC62A080C5A00D64949 /* PostModel.swift in Sources */,
 				D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */,
 				D9F0D5BF2A74BF0F00A28002 /* PostImageView.swift in Sources */,
@@ -265,6 +272,7 @@
 				D9EC30862A5D740E0082B392 /* CommentsView.swift in Sources */,
 				D98A03AB2A7E46D6005965D5 /* ProfileHeaderView.swift in Sources */,
 				D9C80FB42A73BEEA00678682 /* UploadView.swift in Sources */,
+				D92CE9142A81DBEA005FD994 /* OnboardingView.swift in Sources */,
 				D9C80FB62A74250800678682 /* ImagePicker.swift in Sources */,
 				D9B1AAD52A68DA3700BC7DBB /* CarouselView.swift in Sources */,
 				D9F4454829A16361005D5E65 /* KuraApp.swift in Sources */,
