@@ -12,6 +12,7 @@
 		D92CE90C2A80C577005FD994 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90B2A80C577005FD994 /* SettingsRowView.swift */; };
 		D92CE90E2A80D94F005FD994 /* SettingsEditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */; };
 		D92CE9102A81247F005FD994 /* SettingsEditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */; };
+		D92CE9122A81D63A005FD994 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9112A81D63A005FD994 /* SignUpView.swift */; };
 		D93A47D929A26E5A00BEB016 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */; };
 		D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595229A28C4C004FD2C9 /* Extensions.swift */; };
 		D943595529A28F58004FD2C9 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943595429A28F58004FD2C9 /* FeedView.swift */; };
@@ -41,6 +42,7 @@
 		D92CE90B2A80C577005FD994 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditTextView.swift; sourceTree = "<group>"; };
 		D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditImageView.swift; sourceTree = "<group>"; };
+		D92CE9112A81D63A005FD994 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D943595229A28C4C004FD2C9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D943595429A28F58004FD2C9 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				D92CE9072A80988E005FD994 /* SettingsView.swift */,
 				D92CE90D2A80D94F005FD994 /* SettingsEditTextView.swift */,
 				D92CE90F2A81247F005FD994 /* SettingsEditImageView.swift */,
+				D92CE9112A81D63A005FD994 /* SignUpView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				D9991EC62A080C5A00D64949 /* PostModel.swift in Sources */,
 				D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */,
 				D9F0D5BF2A74BF0F00A28002 /* PostImageView.swift in Sources */,
+				D92CE9122A81D63A005FD994 /* SignUpView.swift in Sources */,
 				D9F4454A29A16361005D5E65 /* ContentView.swift in Sources */,
 				D9EC30882A5D78A20082B392 /* MessageView.swift in Sources */,
 				D943595329A28C4C004FD2C9 /* Extensions.swift in Sources */,
