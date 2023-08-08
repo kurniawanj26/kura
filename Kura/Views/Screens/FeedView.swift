@@ -19,7 +19,7 @@ struct FeedView: View {
             // only show the data as they come onto the screen
             LazyVStack {
                 ForEach(posts.dataArray, id: \.self) { post in
-                    PostView(post: post, showHeaderAndFooter: true)
+                    PostView(post: post, showHeaderAndFooter: true, addHeartAnimationToView: true)
                 }
             }
         })
