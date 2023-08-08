@@ -44,7 +44,7 @@ struct OnboardingView: View {
                     
                     Image(systemName: "globe")
                     
-                    Text("Sign In With Google")
+                    Text("Sign in with Google")
                 }
                 .frame(height: 60)
                 .frame(maxWidth: .infinity)
