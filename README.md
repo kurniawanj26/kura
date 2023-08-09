@@ -1,7 +1,7 @@
 # Kura
 A simple and easy to use social media app. Join now!
 
-![ezgif-1-79cb8d9223](https://github.com/kurniawanj26/kura/assets/6804018/eb27b6b3-eb3f-45eb-a65a-578911a1aa16)
+![ezgif-3-83eca48dab](https://github.com/kurniawanj26/kura/assets/6804018/71696b75-4aeb-4ab6-9ad4-b9e1c8e564e4)
 
 ### Technologies
 - Swift
