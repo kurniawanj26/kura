@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    @State var showOnboardingFormView: Bool = false
+    
     var body: some View {
         VStack(spacing: 10) {
             
@@ -29,16 +33,18 @@ struct OnboardingView: View {
                 .foregroundColor(Color.MyTheme.purpleColor)
                 .padding()
             
+            // SIGN IN WITH APPLE
             Button(action: {
-                
+                showOnboardingFormView.toggle()
             }, label: {
                 SignInWithAppleButtonCustom()
                     .frame(height: 60)
                     .frame(maxWidth: .infinity)
             })
             
+            // SIGN IN WITH GOOGLE
             Button(action: {
-                
+                showOnboardingFormView.toggle()
             }, label: {
                 HStack {
                     
@@ -53,10 +59,24 @@ struct OnboardingView: View {
                 .font(.system(size: 23, weight: .medium, design: .default))
             })
             .accentColor(Color.white)
+            
+            // GUEST
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Text("Continue as guest".uppercased())
+                    .font(.headline)
+                    .fontWeight(.medium)
+                    .padding()
+            })
+            .accentColor(.black)
         }
         .padding(.all, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
+        .fullScreenCover(isPresented: $showOnboardingFormView, content: {
+            OnBoardingFormView()
+        })
     }
 }
 
