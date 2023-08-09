@@ -9,12 +9,12 @@ import SwiftUI
 
 struct CommentsView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @State var submissionText: String = ""
     @State var commentArray = [CommentModel]()
     
     var body: some View {
         VStack {
-            
             
             ScrollView {
                 LazyVStack {
@@ -43,10 +43,11 @@ struct CommentsView: View {
                     Image(systemName: "paperplane.fill")
                         .font(.title2)
                 })
-                .accentColor(Color.MyTheme.blueColor)
+                .accentColor(colorScheme == .light ? Color.MyTheme.purpleColor : Color.white)
             }
             .padding(.all,6)
         }
+        .padding(.horizontal)
         .navigationTitle("Comments")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: {
