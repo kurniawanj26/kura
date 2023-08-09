@@ -16,6 +16,8 @@ struct ProfileView: View {
     @State var profileDisplayName: String
     @State var showSettings: Bool = false
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             ProfileHeaderView(profileDisplayName: $profileDisplayName)
@@ -32,11 +34,12 @@ struct ProfileView: View {
                                 }, label: {
                                     Image(systemName: "line.horizontal.3")
                                 })
-                                .accentColor(Color.MyTheme.purpleColor)
+                                    .accentColor(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
                                 .opacity(isMyProfile ? 1.0 : 0.0)
         )
         .sheet(isPresented: $showSettings, content: {
             SettingsView()
+                .preferredColorScheme(colorScheme)
         })
     }
 }

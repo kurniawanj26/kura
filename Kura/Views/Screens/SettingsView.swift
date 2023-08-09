@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
@@ -97,6 +98,7 @@ struct SettingsView: View {
                                         .accentColor(.primary)
             )
         }
+        .accentColor(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
     }
     
     // MARK: FUNCTIONS

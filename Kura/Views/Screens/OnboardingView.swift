@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State var showOnboardingFormView: Bool = false
     
@@ -24,13 +25,13 @@ struct OnboardingView: View {
             Text("Welcome to Kura")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(Color.MyTheme.purpleColor)
+                .foregroundColor(colorScheme == .light ? Color.MyTheme.purpleColor : Color.MyTheme.yellowColor)
             
             Text("Kura is the #1 app for posting pictures of your pets. Happy to have you in our community!")
                 .font(.headline)
                 .fontWeight(.medium)
                 .multilineTextAlignment(.center)
-                .foregroundColor(Color.MyTheme.purpleColor)
+                .foregroundColor(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
                 .padding()
             
             // SIGN IN WITH APPLE

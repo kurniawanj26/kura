@@ -11,6 +11,8 @@ struct SignUpView: View {
     
     @State var showOnboarding: Bool = false
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20, content: {
             
@@ -26,7 +28,7 @@ struct SignUpView: View {
                 .fontWeight(.bold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
-                .foregroundColor(Color.MyTheme.purpleColor)
+                .foregroundColor(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
             
             Text("Sign up now and join the fun community 🥳")
                 .font(.headline)

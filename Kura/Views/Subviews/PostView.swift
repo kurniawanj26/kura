@@ -11,6 +11,7 @@ struct PostView: View {
     
     @State var post: PostModel
     var showHeaderAndFooter: Bool
+    @State var postImage: UIImage = UIImage(named: "dog1")!
     
     @State var animateLike: Bool = false
     @State var addHeartAnimationToView: Bool
@@ -63,7 +64,7 @@ struct PostView: View {
             
             // MARK: IMAGE
             ZStack {
-                Image("dog2")
+                Image(uiImage: postImage)
                     .resizable()
                     .scaledToFit()
                 
@@ -97,8 +98,13 @@ struct PostView: View {
                             .foregroundColor(.primary)
                     })
                     
-                    Image(systemName: "paperplane")
-                        .font(.title3)
+                    Button(action: {
+                        sharePost()
+                    }, label: {
+                        Image(systemName: "paperplane")
+                            .font(.title3)
+                    })
+                    .accentColor(.primary)
                     
                     Spacer()
                 })
@@ -185,8 +191,21 @@ struct PostView: View {
         
     }
     
+    
     func reportPost(reason: String) {
         print("REPORT POST")
+    }
+    
+    func sharePost() {
+        
+        let message = "Check out this post on Kura!"
+        let image = postImage
+        let link = URL(string: "https://www.google.com")!
+        
+        let activityViewController = UIActivityViewController(activityItems: [message, image, link], applicationActivities: nil)
+        
+        let viewController = UIApplication.shared.windows.first?.rootViewController
+        viewController?.present(activityViewController, animated: true, completion: nil)
     }
     
     struct PostView_Previews: PreviewProvider {

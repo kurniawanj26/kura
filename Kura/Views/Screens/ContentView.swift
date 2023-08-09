@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     // String? means it's optional
-    var currentUserID: String? = nil
+    var currentUserID: String? = "user"
     
     var body: some View {
         TabView {
@@ -54,12 +56,13 @@ struct ContentView: View {
         }
         // set the icon and text color using colorset in Assets
         // use the extensions from Helpers
-        .accentColor(Color.MyTheme.purpleColor)
+        .accentColor(colorScheme == .light ? Color.MyTheme.purpleColor : Color.white)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
     }
 }
