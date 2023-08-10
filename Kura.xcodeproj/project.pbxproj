@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		96A5F7A82B8D2E23151CC978 /* Pods_Kura.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF4684F044994284336072 /* Pods_Kura.framework */; };
 		D9289D452A8472AE000B3794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9289D442A8472AE000B3794 /* GoogleService-Info.plist */; };
+		D9289D492A848C11000B3794 /* SignInWithGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9289D482A848C11000B3794 /* SignInWithGoogle.swift */; };
 		D92CE9082A80988E005FD994 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9072A80988E005FD994 /* SettingsView.swift */; };
 		D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */; };
 		D92CE90C2A80C577005FD994 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90B2A80C577005FD994 /* SettingsRowView.swift */; };
@@ -46,6 +47,7 @@
 		3FAF4684F044994284336072 /* Pods_Kura.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kura.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9289D432A841E5C000B3794 /* Kura.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kura.entitlements; sourceTree = "<group>"; };
 		D9289D442A8472AE000B3794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9289D482A848C11000B3794 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
 		D92CE9072A80988E005FD994 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabelView.swift; sourceTree = "<group>"; };
 		D92CE90B2A80C577005FD994 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,22 @@
 				EB2AA223BA36C77F815C7EC5 /* Pods-Kura.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D9289D462A848BC6000B3794 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D9289D472A848BD1000B3794 /* SignInProviders */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D9289D472A848BD1000B3794 /* SignInProviders */ = {
+			isa = PBXGroup;
+			children = (
+				D9289D482A848C11000B3794 /* SignInWithGoogle.swift */,
+			);
+			path = SignInProviders;
 			sourceTree = "<group>";
 		};
 		D93A47DA29A274D900BEB016 /* Views */ = {
@@ -197,6 +215,7 @@
 		D9F4454629A16361005D5E65 /* Kura */ = {
 			isa = PBXGroup;
 			children = (
+				D9289D462A848BC6000B3794 /* Services */,
 				D9289D432A841E5C000B3794 /* Kura.entitlements */,
 				D9991EC42A080C3700D64949 /* Model */,
 				D943595129A28C2B004FD2C9 /* Helpers */,
@@ -229,6 +248,7 @@
 				D9F4454129A16361005D5E65 /* Frameworks */,
 				D9F4454229A16361005D5E65 /* Resources */,
 				A091C11DAC473D48840E67AB /* [CP] Embed Pods Frameworks */,
+				40719F65C18D079CAC4F9120 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -309,6 +329,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		40719F65C18D079CAC4F9120 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kura/Pods-Kura-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kura/Pods-Kura-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kura/Pods-Kura-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A091C11DAC473D48840E67AB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,6 +374,7 @@
 				D92CE9162A81E3CA005FD994 /* SignInWithAppleButtonCustom.swift in Sources */,
 				D9991EC62A080C5A00D64949 /* PostModel.swift in Sources */,
 				D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */,
+				D9289D492A848C11000B3794 /* SignInWithGoogle.swift in Sources */,
 				D9F0D5BF2A74BF0F00A28002 /* PostImageView.swift in Sources */,
 				D92CE9122A81D63A005FD994 /* SignUpView.swift in Sources */,
 				D9F4454A29A16361005D5E65 /* ContentView.swift in Sources */,

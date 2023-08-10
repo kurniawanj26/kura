@@ -12,6 +12,7 @@ struct OnboardingView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State var showOnboardingFormView: Bool = false
+    @State var showError: Bool = false
     
     var body: some View {
         VStack(spacing: 10) {
@@ -45,7 +46,7 @@ struct OnboardingView: View {
             
             // SIGN IN WITH GOOGLE
             Button(action: {
-                showOnboardingFormView.toggle()
+                SignInWithGoogle.instance.startSignInWithGoogleFlow(view: self)
             }, label: {
                 HStack {
                     
@@ -77,6 +78,9 @@ struct OnboardingView: View {
         .edgesIgnoringSafeArea(.all)
         .fullScreenCover(isPresented: $showOnboardingFormView, content: {
             OnBoardingFormView()
+        })
+        .alert(isPresented: $showError, content: {
+            return Alert(title: Text("Error signing in"))
         })
     }
 }

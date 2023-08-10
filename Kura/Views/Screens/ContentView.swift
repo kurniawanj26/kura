@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     
     // String? means it's optional
-    var currentUserID: String? = "user"
+    var currentUserID: String? = nil
     
     var body: some View {
         TabView {

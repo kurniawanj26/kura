@@ -15,15 +15,12 @@
  */
 
 import Foundation
-import FirebaseSharedSwift
 import FirebaseFirestore
 
-internal struct FirestorePassthroughTypes: StructureCodingPassthroughTypeResolver {
-  static func isPassthroughType<T>(_ t: T) -> Bool {
-    return
-      t is GeoPoint ||
-      t is Timestamp ||
-      t is FieldValue ||
-      t is DocumentReference
-  }
+internal func isFirestorePassthroughType<T: Any>(_ value: T) -> Bool {
+  return
+    T.self == GeoPoint.self ||
+    T.self == Timestamp.self ||
+    T.self == FieldValue.self ||
+    T.self == DocumentReference.self
 }
