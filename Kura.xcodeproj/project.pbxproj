@@ -33,6 +33,7 @@
 		D9C80FB42A73BEEA00678682 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C80FB32A73BEEA00678682 /* UploadView.swift */; };
 		D9C80FB62A74250800678682 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C80FB52A74250800678682 /* ImagePicker.swift */; };
 		D9D1BFF22A84A93B009CD083 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D1BFF12A84A93B009CD083 /* AuthService.swift */; };
+		D9D1BFF42A853D94009CD083 /* Enums & Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D1BFF32A853D94009CD083 /* Enums & Struct.swift */; };
 		D9EC30862A5D740E0082B392 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC30852A5D740E0082B392 /* CommentsView.swift */; };
 		D9EC30882A5D78A20082B392 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC30872A5D78A20082B392 /* MessageView.swift */; };
 		D9EC308A2A5D7A300082B392 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC30892A5D7A300082B392 /* CommentModel.swift */; };
@@ -72,6 +73,7 @@
 		D9C80FB32A73BEEA00678682 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		D9C80FB52A74250800678682 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		D9D1BFF12A84A93B009CD083 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		D9D1BFF32A853D94009CD083 /* Enums & Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enums & Struct.swift"; sourceTree = "<group>"; };
 		D9EC30852A5D740E0082B392 /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
 		D9EC30872A5D78A20082B392 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		D9EC30892A5D7A300082B392 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		D9289D462A848BC6000B3794 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D9D1BFF02A84A91E009CD083 /* Firebase */,
 				D9289D472A848BD1000B3794 /* SignInProviders */,
 			);
 			path = Services;
@@ -126,7 +129,6 @@
 		D9289D472A848BD1000B3794 /* SignInProviders */ = {
 			isa = PBXGroup;
 			children = (
-				D9D1BFF02A84A91E009CD083 /* Firebase */,
 				D9289D482A848C11000B3794 /* SignInWithGoogle.swift */,
 			);
 			path = SignInProviders;
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				D943595229A28C4C004FD2C9 /* Extensions.swift */,
+				D9D1BFF32A853D94009CD083 /* Enums & Struct.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				D9C80FB42A73BEEA00678682 /* UploadView.swift in Sources */,
 				D92CE9142A81DBEA005FD994 /* OnboardingView.swift in Sources */,
 				D92CE9182A81EA11005FD994 /* OnBoardingFormView.swift in Sources */,
+				D9D1BFF42A853D94009CD083 /* Enums & Struct.swift in Sources */,
 				D9C80FB62A74250800678682 /* ImagePicker.swift in Sources */,
 				D9B1AAD52A68DA3700BC7DBB /* CarouselView.swift in Sources */,
 				D9F4454829A16361005D5E65 /* KuraApp.swift in Sources */,
