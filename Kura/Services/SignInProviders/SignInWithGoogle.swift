@@ -40,7 +40,7 @@ class SignInWithGoogle: NSObject, GIDSignInDelegate {
         let accessToken: String = user.authentication.accessToken
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
-        print("SIGN IN TO FIREBASE NOW. NAME: \(fullName), EMAIL: \(email)")
+        self.onboardingView.connectToFirebase(name: fullName, email: email, provider: "google", credential: credential)
         
     }
     
