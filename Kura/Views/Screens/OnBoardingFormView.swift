@@ -9,7 +9,11 @@ import SwiftUI
 
 struct OnBoardingFormView: View {
     
-    @State var displayName: String = ""
+    @Binding var displayName: String
+    @Binding var email: String
+    @Binding var providerID: String
+    @Binding var procider: String
+    
     @State var showImagePicker: Bool = false
     
     // MARK: IMAGE PICKER
@@ -67,7 +71,10 @@ struct OnBoardingFormView: View {
 }
 
 struct OnBoardingFormView_Previews: PreviewProvider {
+    
+    @State static var testString: String = ""
+    
     static var previews: some View {
-        OnBoardingFormView()
+        OnBoardingFormView(displayName: $testString, email: $testString, providerID: $testString, procider: $testString)
     }
 }
