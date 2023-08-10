@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		96A5F7A82B8D2E23151CC978 /* Pods_Kura.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF4684F044994284336072 /* Pods_Kura.framework */; };
+		D9289D452A8472AE000B3794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9289D442A8472AE000B3794 /* GoogleService-Info.plist */; };
 		D92CE9082A80988E005FD994 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9072A80988E005FD994 /* SettingsView.swift */; };
 		D92CE90A2A809AEA005FD994 /* SettingsLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */; };
 		D92CE90C2A80C577005FD994 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE90B2A80C577005FD994 /* SettingsRowView.swift */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		3FAF4684F044994284336072 /* Pods_Kura.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kura.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9289D432A841E5C000B3794 /* Kura.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kura.entitlements; sourceTree = "<group>"; };
+		D9289D442A8472AE000B3794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D92CE9072A80988E005FD994 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D92CE9092A809AE9005FD994 /* SettingsLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabelView.swift; sourceTree = "<group>"; };
 		D92CE90B2A80C577005FD994 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				D943595129A28C2B004FD2C9 /* Helpers */,
 				D93A47DA29A274D900BEB016 /* Views */,
 				D9F4454B29A16364005D5E65 /* Assets.xcassets */,
+				D9289D442A8472AE000B3794 /* GoogleService-Info.plist */,
 				D9F4454D29A16364005D5E65 /* Preview Content */,
 				D93A47D829A26E5A00BEB016 /* LaunchScreen.storyboard */,
 			);
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D93A47D929A26E5A00BEB016 /* LaunchScreen.storyboard in Resources */,
+				D9289D452A8472AE000B3794 /* GoogleService-Info.plist in Resources */,
 				D9F4454F29A16364005D5E65 /* Preview Assets.xcassets in Resources */,
 				D9F4454C29A16364005D5E65 /* Assets.xcassets in Resources */,
 			);
