@@ -9,12 +9,18 @@ import SwiftUI
 
 struct OnBoardingFormView: View {
     
-    @State var displayName: String = ""
+    @Binding var displayName: String
+    @Binding var email: String
+    @Binding var providerID: String
+    @Binding var procider: String
+    
     @State var showImagePicker: Bool = false
     
     // MARK: IMAGE PICKER
     @State var imageSelected: UIImage = UIImage(named: "logo")!
     @State var sourceType: UIImagePickerController.SourceType = .photoLibrary
+    
+    @State var showError: Bool = false
     
     var body: some View {
         VStack(alignment: .center, spacing: 20, content: {
@@ -57,17 +63,32 @@ struct OnBoardingFormView: View {
         .sheet(isPresented: $showImagePicker, onDismiss: createProfile, content: {
             ImagePicker(imageSelected: $imageSelected, sourceType: $sourceType)
         })
+        .alert(isPresented: $showError) { () -> Alert in
+            return Alert(title: Text("Error creating profile 🥲"))
+        }
         
     }
     
     // MARK: FUNCTIONS
     func createProfile() {
         print("CREATING PROFILE")
+        AuthService.instance.createNewUserInDatabase(name: displayName, email: email, providerID: providerID, provider: procider, profileImage: imageSelected) { returnedUserID in
+            
+            if let userID = returnedUserID {
+                // SUCCESS
+            } else {
+                // ERROR
+                print("Error creating user in database")
+            }
+        }
     }
 }
 
 struct OnBoardingFormView_Previews: PreviewProvider {
+    
+    @State static var testString: String = ""
+    
     static var previews: some View {
-        OnBoardingFormView()
+        OnBoardingFormView(displayName: $testString, email: $testString, providerID: $testString, procider: $testString)
     }
 }

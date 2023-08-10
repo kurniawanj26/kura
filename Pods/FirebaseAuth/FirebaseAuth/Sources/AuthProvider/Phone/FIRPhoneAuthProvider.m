@@ -15,14 +15,14 @@
  */
 
 #import <TargetConditionals.h>
-#if TARGET_OS_IOS && (!defined(TARGET_OS_VISION) || !TARGET_OS_VISION)
+#if TARGET_OS_IOS
 
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuthSettings.h"
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRMultiFactorResolver.h"
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRPhoneAuthProvider.h"
-#import "FirebaseCore/Extension/FirebaseCoreInternal.h"
+#import "FirebaseAuth/Sources/Public/FirebaseAuth/FirebaseAuthVersion.h"
+#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
 
-#import "FirebaseAppCheck/Interop/FIRAppCheckTokenResultInterop.h"
 #import "FirebaseAuth/Sources/Auth/FIRAuthGlobalWorkQueue.h"
 #import "FirebaseAuth/Sources/Auth/FIRAuth_Internal.h"
 #import "FirebaseAuth/Sources/Backend/FIRAuthBackend+MultiFactor.h"
@@ -105,12 +105,6 @@ extern NSString *const FIRPhoneMultiFactorID;
       @brief The callback URL scheme used for reCAPTCHA fallback.
    */
   NSString *_callbackScheme;
-
-  /** @var _usingClientIDScheme
-      @brief True if the reverse client ID is registered as a custom URL scheme, and false
-     otherwise.
-   */
-  BOOL _usingClientIDScheme;
 }
 
 /** @fn initWithAuth:
@@ -123,15 +117,9 @@ extern NSString *const FIRPhoneMultiFactorID;
   if (self) {
     _auth = auth;
     if (_auth.app.options.clientID) {
-      NSString *reverseClientIDScheme =
-          [[[_auth.app.options.clientID componentsSeparatedByString:@"."]
-               reverseObjectEnumerator].allObjects componentsJoinedByString:@"."];
-      if ([FIRAuthWebUtils isCallbackSchemeRegisteredForCustomURLScheme:reverseClientIDScheme]) {
-        _callbackScheme = reverseClientIDScheme;
-        _usingClientIDScheme = YES;
-      }
-    }
-    if (!_usingClientIDScheme) {
+      _callbackScheme = [[[_auth.app.options.clientID componentsSeparatedByString:@"."]
+                             reverseObjectEnumerator].allObjects componentsJoinedByString:@"."];
+    } else {
       _callbackScheme = [kCustomUrlSchemePrefix
           stringByAppendingString:[_auth.app.options.googleAppID
                                       stringByReplacingOccurrencesOfString:@":"
@@ -246,7 +234,7 @@ extern NSString *const FIRPhoneMultiFactorID;
     @param error The error that occurred if any.
     @return The reCAPTCHA token if successful.
  */
-- (nullable NSString *)reCAPTCHATokenForURL:(NSURL *)URL error:(NSError **_Nonnull)error {
+- (NSString *)reCAPTCHATokenForURL:(NSURL *)URL error:(NSError **)error {
   NSURLComponents *actualURLComponents = [NSURLComponents componentsWithURL:URL
                                                     resolvingAgainstBaseURL:NO];
   NSArray<NSURLQueryItem *> *queryItems = [actualURLComponents queryItems];
@@ -264,29 +252,26 @@ extern NSString *const FIRPhoneMultiFactorID;
   } else {
     errorData = nil;
   }
-  if (error != NULL && errorData != nil) {
-    NSError *jsonError;
-    NSDictionary *errorDict = [NSJSONSerialization JSONObjectWithData:errorData
-                                                              options:0
-                                                                error:&jsonError];
-    if (jsonError) {
-      *error = [FIRAuthErrorUtils JSONSerializationErrorWithUnderlyingError:jsonError];
-      return nil;
+  NSError *jsonError;
+  NSDictionary *errorDict = [NSJSONSerialization JSONObjectWithData:errorData
+                                                            options:0
+                                                              error:&jsonError];
+  if (jsonError) {
+    *error = [FIRAuthErrorUtils JSONSerializationErrorWithUnderlyingError:jsonError];
+    return nil;
+  }
+  *error = [FIRAuthErrorUtils URLResponseErrorWithCode:errorDict[@"code"]
+                                               message:errorDict[@"message"]];
+  if (!*error) {
+    NSString *reason;
+    if (errorDict[@"code"] && errorDict[@"message"]) {
+      reason = [NSString stringWithFormat:@"[%@] - %@", errorDict[@"code"], errorDict[@"message"]];
+    } else {
+      reason = [NSString stringWithFormat:@"An unknown error occurred with the following "
+                                           "response: %@",
+                                          deepLinkURL];
     }
-    *error = [FIRAuthErrorUtils URLResponseErrorWithCode:errorDict[@"code"]
-                                                 message:errorDict[@"message"]];
-    if (!*error) {
-      NSString *reason;
-      if (errorDict[@"code"] && errorDict[@"message"]) {
-        reason =
-            [NSString stringWithFormat:@"[%@] - %@", errorDict[@"code"], errorDict[@"message"]];
-      } else {
-        reason = [NSString stringWithFormat:@"An unknown error occurred with the following "
-                                             "response: %@",
-                                            deepLinkURL];
-      }
-      *error = [FIRAuthErrorUtils appVerificationUserInteractionFailureWithReason:reason];
-    }
+    *error = [FIRAuthErrorUtils appVerificationUserInteractionFailureWithReason:reason];
   }
   return nil;
 }
@@ -528,7 +513,7 @@ extern NSString *const FIRPhoneMultiFactorID;
                                                   } else {
                                                     if (callback) {
                                                       callback(
-                                                          response.phoneSessionInfo.sessionInfo,
+                                                          response.enrollmentResponse.sessionInfo,
                                                           nil);
                                                     }
                                                   }
@@ -594,17 +579,6 @@ extern NSString *const FIRPhoneMultiFactorID;
  */
 - (void)verifyClientWithUIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
                         completion:(FIRVerifyClientCallback)completion {
-// Remove the simulator check below after FCM supports APNs in simulators
-#if TARGET_OS_SIMULATOR
-  if (@available(iOS 16, *)) {
-    NSDictionary *environment = [[NSProcessInfo processInfo] environment];
-    if ((environment[@"XCTestConfigurationFilePath"] == nil)) {
-      [self reCAPTCHAFlowWithUIDelegate:UIDelegate completion:completion];
-      return;
-    }
-  }
-#endif
-
   if (_auth.appCredentialManager.credential) {
     completion(_auth.appCredentialManager.credential, nil, nil);
     return;
@@ -644,12 +618,8 @@ extern NSString *const FIRPhoneMultiFactorID;
                                              FIRLogWarning(kFIRLoggerAuth, @"I-AUT000014",
                                                            @"Failed to receive remote notification "
                                                            @"to verify app identity within "
-                                                           @"%.0f second(s), falling back to "
-                                                           @"reCAPTCHA verification.",
+                                                           @"%.0f second(s)",
                                                            timeout);
-                                             [self reCAPTCHAFlowWithUIDelegate:UIDelegate
-                                                                    completion:completion];
-                                             return;
                                            }
                                            completion(credential, nil, nil);
                                          }];
@@ -712,16 +682,13 @@ extern NSString *const FIRPhoneMultiFactorID;
                                      if (error) {
                                        if (completion) {
                                          completion(nil, error);
+                                         return;
                                        }
-                                       return;
                                      }
                                      NSString *bundleID = [NSBundle mainBundle].bundleIdentifier;
                                      NSString *clientID = self->_auth.app.options.clientID;
                                      NSString *appID = self->_auth.app.options.googleAppID;
                                      NSString *apiKey = self->_auth.requestConfiguration.APIKey;
-                                     id<FIRAppCheckInterop> appCheck =
-                                         self->_auth.requestConfiguration.appCheck;
-
                                      NSMutableArray<NSURLQueryItem *> *queryItems = [@[
                                        [NSURLQueryItem queryItemWithName:@"apiKey" value:apiKey],
                                        [NSURLQueryItem queryItemWithName:@"authType"
@@ -733,7 +700,7 @@ extern NSString *const FIRPhoneMultiFactorID;
                                                        value:[FIRAuthBackend authUserAgent]],
                                        [NSURLQueryItem queryItemWithName:@"eventId" value:eventID]
                                      ] mutableCopy];
-                                     if (self->_usingClientIDScheme) {
+                                     if (clientID) {
                                        [queryItems
                                            addObject:[NSURLQueryItem queryItemWithName:@"clientId"
                                                                                  value:clientID]];
@@ -742,6 +709,7 @@ extern NSString *const FIRPhoneMultiFactorID;
                                            addObject:[NSURLQueryItem queryItemWithName:@"appId"
                                                                                  value:appID]];
                                      }
+
                                      if (self->_auth.requestConfiguration.languageCode) {
                                        [queryItems
                                            addObject:[NSURLQueryItem
@@ -755,32 +723,8 @@ extern NSString *const FIRPhoneMultiFactorID;
                                              [NSString stringWithFormat:kReCAPTCHAURLStringFormat,
                                                                         authDomain]];
                                      [components setQueryItems:queryItems];
-                                     if (appCheck) {
-                                       [appCheck
-                                           getTokenForcingRefresh:false
-                                                       completion:^(
-                                                           id<FIRAppCheckTokenResultInterop> _Nonnull tokenResult) {
-                                                         if (tokenResult.error) {
-                                                           FIRLogWarning(
-                                                               kFIRLoggerAuth, @"I-AUT000018",
-                                                               @"Error getting App Check token; "
-                                                               @"using placeholder token "
-                                                               @"instead. Error: %@",
-                                                               tokenResult.error);
-                                                         }
-                                                         NSString *appCheckTokenFragment = [@"fac="
-                                                             stringByAppendingString:tokenResult
-                                                                                         .token];
-                                                         [components
-                                                             setFragment:appCheckTokenFragment];
-                                                         if (completion) {
-                                                           completion([components URL], nil);
-                                                         }
-                                                       }];
-                                     } else {
-                                       if (completion) {
-                                         completion([components URL], nil);
-                                       }
+                                     if (completion) {
+                                       completion([components URL], nil);
                                      }
                                    }];
 }
@@ -789,4 +733,4 @@ extern NSString *const FIRPhoneMultiFactorID;
 
 NS_ASSUME_NONNULL_END
 
-#endif  // TARGET_OS_IOS && (!defined(TARGET_OS_VISION) || !TARGET_OS_VISION)
+#endif

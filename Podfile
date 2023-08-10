@@ -5,13 +5,13 @@ target 'Kura' do
 
   use_frameworks!
 
-pod 'FirebaseAnalytics'
-pod 'FirebaseCore'
-pod 'Firebase/Auth'
-pod 'Firebase/Firestore'
-pod 'FirebaseFirestoreSwift'
-pod 'Firebase/Storage'
+pod 'FirebaseAnalytics', '6.9.0'
+pod 'FirebaseCore', '6.10.4'
+pod 'Firebase/Auth', '6.34.0'
+pod 'Firebase/Firestore', '6.34.0'
+pod 'FirebaseFirestoreSwift', '0.4.0'
+pod 'Firebase/Storage', '6.34.0'
 
-pod 'GoogleSignIn'
+pod 'GoogleSignIn', '5.0.2'
 
 end

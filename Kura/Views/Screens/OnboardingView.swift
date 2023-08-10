@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct OnboardingView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @State var showOnboardingFormView: Bool = false
+    @State var showError: Bool = false
+    
+    @State var displayName: String = ""
+    @State var email: String = ""
+    @State var providerID: String = ""
+    @State var provider: String = ""
     
     var body: some View {
         VStack(spacing: 10) {
@@ -45,7 +52,7 @@ struct OnboardingView: View {
             
             // SIGN IN WITH GOOGLE
             Button(action: {
-                showOnboardingFormView.toggle()
+                SignInWithGoogle.instance.startSignInWithGoogleFlow(view: self)
             }, label: {
                 HStack {
                     
@@ -76,9 +83,38 @@ struct OnboardingView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
         .fullScreenCover(isPresented: $showOnboardingFormView, content: {
-            OnBoardingFormView()
+            OnBoardingFormView(displayName: $displayName, email: $email, providerID: $providerID, procider: $provider)
+        })
+        .alert(isPresented: $showError, content: {
+            return Alert(title: Text("Error signing in"))
         })
     }
+    
+    // MARK: FUNCTIONS
+    
+    func connectToFirebase(name: String, email: String, provider: String, credential: AuthCredential) {
+        
+        AuthService.instance.logInUserToFirebase(credential: credential) { returnedProviderID, isError in
+                
+            if let providerID = returnedProviderID, !isError {
+                
+                // SUCCESS
+                self.displayName = name
+                self.email = email
+                self.providerID = providerID
+                self.provider = provider
+                self.showOnboardingFormView.toggle()
+                
+            } else {
+                // ERROR
+                print("Error getting info from log in to Firebase")
+                self.showError.toggle()
+            }
+            
+        }
+        
+    }
+        
 }
 
 struct OnboardingView_Previews: PreviewProvider {
