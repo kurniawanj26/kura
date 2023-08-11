@@ -9,7 +9,6 @@ import Foundation
 
 // Fields within the document in database
 struct DatabaseUserField {
-    
     static let displayName = "display_name"
     static let email = "email"
     static let providerID = "provider_id"
@@ -17,7 +16,15 @@ struct DatabaseUserField {
     static let userID = "user_id"
     static let bio = "bio"
     static let dateCreated = "date_created"
-    
+}
+
+// Fields for post data
+struct DatabasePostField {
+    static let postID = "post_id"
+    static let userID = "user_id"
+    static let displayName = "display_name"
+    static let caption = "caption"
+    static let dateCreated = "date_created"
 }
 
 // Fields for UserDefaults
