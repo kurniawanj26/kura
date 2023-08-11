@@ -9,6 +9,9 @@ import SwiftUI
 
 struct OnBoardingFormView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var displayName: String
     @Binding var email: String
     @Binding var providerID: String
@@ -34,7 +37,8 @@ struct OnBoardingFormView: View {
                 .padding()
                 .frame(height: 60)
                 .frame(maxWidth: .infinity)
-                .background(Color.MyTheme.beigeColor)
+                .background(colorScheme == .light ? Color.MyTheme.beigeColor : .gray)
+                .foregroundColor(.black)
                 .cornerRadius(12)
                 .font(.headline)
                 .autocapitalization(.sentences)
@@ -58,7 +62,7 @@ struct OnBoardingFormView: View {
             .animation(.easeOut(duration: 0.5))
         })
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.MyTheme.purpleColor)
+        .background(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
         .edgesIgnoringSafeArea(.all)
         .sheet(isPresented: $showImagePicker, onDismiss: createProfile, content: {
             ImagePicker(imageSelected: $imageSelected, sourceType: $sourceType)
@@ -76,6 +80,21 @@ struct OnBoardingFormView: View {
             
             if let userID = returnedUserID {
                 // SUCCESS
+                print("Success created new user in database")
+                
+                AuthService.instance.logInUserToApp(userID: userID) { success in
+                    if success {
+                        print("User logged in")
+                        
+                        // return to app
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                    } else {
+                        print("Error logged in")
+                        self.showError.toggle()
+                    }
+                }
             } else {
                 // ERROR
                 print("Error creating user in database")
