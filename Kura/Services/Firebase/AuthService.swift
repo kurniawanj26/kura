@@ -24,28 +24,93 @@ class AuthService {
     
     // MARK: AUTH USER FUNCTIONS
     
-    func logInUserToFirebase(credential: AuthCredential, handler: @escaping (_ providerID: String?, _ isError: Bool) ->()) {
+    func logInUserToFirebase(credential: AuthCredential, handler: @escaping (_ providerID: String?, _ isError: Bool, _ isNewUser: Bool?, _ userID: String?) ->()) {
         
         Auth.auth().signIn(with: credential) { result, error in
             
             // check for errors
             if error != nil {
                 print("Error loggin in to Firebase")
-                handler(nil, true)
+                handler(nil, true, nil, nil)
                 return
             }
             
             // check for provider ID
             guard let providerID = result?.user.uid else {
                 print("Error getting provider ID")
-                handler(nil, true)
+                handler(nil, true, nil, nil)
                 return
             }
             
-            // success connecting to Firebase
-            handler(providerID, false)
+            // check if user already exist in database, if true skip the onboarding
+            self.checkIfUserExistInDatabase(providerID: providerID) { returnedUserID in
+            
+                if let userID = returnedUserID {
+                    // user exist, login to app
+                    handler(providerID, false, false, userID)
+
+                } else {
+                    
+                    // user doesn't exist, continue to onboarding a new user
+                    handler(providerID, false, true, nil)
+                }
+            }
+            
         }
         
+    }
+    
+    func logInUserToApp(userID: String, handler: @escaping (_ success: Bool) -> ()) {
+        
+        // get the user info
+        getUserInfo(forUserID: userID) { (returnedName, returnedBio) in
+                        
+            if let name = returnedName, let bio = returnedBio {
+                // success login
+                print("Success getting user info while logging in")
+                handler(true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    // set the users info into the app
+                    UserDefaults.standard.set(userID, forKey: CurrentUserDefaults.userID)
+                    UserDefaults.standard.set(bio, forKey: CurrentUserDefaults.bio)
+                    UserDefaults.standard.set(name, forKey: CurrentUserDefaults.displayName)
+                }
+                
+            } else {
+                // error login
+                print("Error getting user info while logging in")
+                handler(false)
+            }
+                
+        }
+    
+    }
+    
+    func logOutUser(handler: @escaping (_ success: Bool) -> ()) {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Error logging out \(error)")
+            handler(false)
+            return
+        }
+        
+        handler(true)
+        
+        // update user defaults
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            
+            // get all properties in user default
+            // to make sure the app removed everything in user defaults
+            let defaultsDictionary = UserDefaults.standard.dictionaryRepresentation()
+            
+            defaultsDictionary.keys.forEach { key in
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
+
     }
     
     func createNewUserInDatabase(name: String, email: String, providerID: String, provider: String, profileImage: UIImage, handler: @escaping (_ userID: String?) ->()) {
@@ -55,6 +120,7 @@ class AuthService {
         let userID = document.documentID
         
         // upload profile image to Storage
+        ImageManager.instance.uploadProfileImage(userID: userID, image: profileImage)
         
         // upload profile data to Firestore
         let userData: [String: Any] = [
@@ -76,6 +142,49 @@ class AuthService {
                 // SUCCESS
                 handler(userID)
             }
+        }
+        
+    }
+    
+    private func checkIfUserExistInDatabase(providerID: String, handler: @escaping (_ existingUserID: String?) -> ()) {
+        
+        // if userID is returned, it means the user exist in the database
+        
+        REF_USERS.whereField(DatabaseUserField.providerID, isEqualTo: providerID).getDocuments { querySnapshot, error in
+            
+            if let snapshot = querySnapshot, snapshot.count > 0, let document = snapshot.documents.first {
+                // success, existing user
+                let existingUserID = document.documentID
+                handler(existingUserID)
+                return
+            } else {
+                // error, new user
+                handler(nil)
+                return
+            }
+        }
+        
+    }
+    
+    // MARK: GET USER FUNCTIONS
+    // forUserID -> global
+    // userID -> local
+    func getUserInfo(forUserID userID: String, handler: @escaping(_ name: String?, _ bio: String?) -> ()) {
+        
+        REF_USERS.document(userID).getDocument { (documentSnapshot, error) in
+            
+            if let document = documentSnapshot,
+               let name = document.get(DatabaseUserField.displayName) as? String,
+               let bio = document.get(DatabaseUserField.bio) as? String {
+                print("Success getting user info")
+                handler(name, bio)
+                return
+            } else {
+                print("Error getting user info")
+                handler(nil, nil)
+                return
+            }
+            
         }
         
     }

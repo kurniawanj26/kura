@@ -77,12 +77,14 @@ struct OnboardingView: View {
                     .fontWeight(.medium)
                     .padding()
             })
-            .accentColor(.black)
+            .accentColor(colorScheme == .light ? .black : .white)
         }
         .padding(.all, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
-        .fullScreenCover(isPresented: $showOnboardingFormView, content: {
+        .fullScreenCover(isPresented: $showOnboardingFormView, onDismiss: {
+            self.presentationMode.wrappedValue.dismiss()
+        }, content: {
             OnBoardingFormView(displayName: $displayName, email: $email, providerID: $providerID, procider: $provider)
         })
         .alert(isPresented: $showError, content: {
@@ -94,19 +96,42 @@ struct OnboardingView: View {
     
     func connectToFirebase(name: String, email: String, provider: String, credential: AuthCredential) {
         
-        AuthService.instance.logInUserToFirebase(credential: credential) { returnedProviderID, isError in
-                
-            if let providerID = returnedProviderID, !isError {
-                
-                // SUCCESS
-                self.displayName = name
-                self.email = email
-                self.providerID = providerID
-                self.provider = provider
-                self.showOnboardingFormView.toggle()
-                
+        AuthService.instance.logInUserToFirebase(credential: credential) { returnedProviderID, isError, isNewUser, returnedUserID in
+            
+            if let newUser = isNewUser {
+                if newUser {
+                    if let providerID = returnedProviderID, !isError {
+                        // success
+                        // new user, continue to onboarding form view
+                        self.displayName = name
+                        self.email = email
+                        self.providerID = providerID
+                        self.provider = provider
+                        self.showOnboardingFormView.toggle()
+                    } else {
+                        // error
+                        print("Error getting provider id from log in to Firebase")
+                        self.showError.toggle()
+                    }
+                } else {
+                    if let userID = returnedUserID {
+                        // success, login to app
+                        AuthService.instance.logInUserToApp(userID: userID) { success in
+                            if success {
+                                print("Successful login existing user")
+                                self.presentationMode.wrappedValue.dismiss()
+                            } else {
+                                print("Error login existing user")
+                                self.showError.toggle()
+                            }
+                        }
+                    } else {
+                        //
+                        print("Error getting user id from database")
+                        self.showError.toggle()
+                    }
+                }
             } else {
-                // ERROR
                 print("Error getting info from log in to Firebase")
                 self.showError.toggle()
             }
