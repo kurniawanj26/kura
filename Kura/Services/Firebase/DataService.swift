@@ -8,7 +8,7 @@
 // Used to handle uploading and download data (other user) from database
 import Foundation
 import SwiftUI
-import Firebase
+import FirebaseFirestore
 
 class DataService {
     
@@ -60,6 +60,43 @@ class DataService {
             }
         }
         
+    }
+    
+    // MARK: GET FUNCTIONS
+    
+    func downloadPostForUser(userID: String, handler: @escaping(_ posts: [PostModel]) ->()) {
+        REF_POSTS.whereField(DatabasePostField.userID, isEqualTo: userID).getDocuments { querySnapshot, error in
+            handler(self.getPostsFromSnapshot(querySnapshot: querySnapshot))
+        }
+    }
+    
+    private func getPostsFromSnapshot(querySnapshot: QuerySnapshot?) -> [PostModel] {
+        
+        var postArray = [PostModel]()
+        
+        if let snapshot = querySnapshot, snapshot.documents.count > 0 {
+            
+            for document in snapshot.documents {
+                if
+                    let userID = document.get(DatabasePostField.userID) as? String,
+                    let displayName = document.get(DatabasePostField.displayName) as? String,
+                    let timestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
+                    
+                    let caption = document.get(DatabasePostField.caption) as? String
+                    let date = timestamp.dateValue()
+                    let postID = document.documentID
+                    
+                    let newPost = PostModel(postID: postID, userID: userID, username: displayName, caption: caption, dateCreated: date, likeCount: 0, likedByOwner: false)
+                    
+                    postArray.append(newPost)
+                }
+            }
+            
+            return postArray
+        } else {
+            print("No document found in snapshot for this user")
+            return postArray
+        }
     }
 }
 
