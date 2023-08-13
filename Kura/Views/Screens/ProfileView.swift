@@ -11,7 +11,7 @@ struct ProfileView: View {
     
     var isMyProfile: Bool
     var profileUserID: String
-    var posts = PostArrayObject()
+    var posts: PostArrayObject
     
     @State var profileDisplayName: String
     @State var showSettings: Bool = false
@@ -62,7 +62,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProfileView(isMyProfile: true, profileUserID: "", profileDisplayName: "Luffy")
+            ProfileView(isMyProfile: true, profileUserID: "", posts: PostArrayObject(userID: ""), profileDisplayName: "Luffy")
         }
     }
 }
