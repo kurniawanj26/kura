@@ -15,12 +15,13 @@ struct ProfileView: View {
     
     @State var profileDisplayName: String
     @State var showSettings: Bool = false
+    @State var profileImage: UIImage = UIImage(named: "logo.loading")!
     
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
-            ProfileHeaderView(profileDisplayName: $profileDisplayName)
+            ProfileHeaderView(profileDisplayName: $profileDisplayName, profileImage: $profileImage)
             
             Divider()
             
@@ -37,10 +38,24 @@ struct ProfileView: View {
                                     .accentColor(colorScheme == .light ? Color.MyTheme.purpleColor : .white)
                                 .opacity(isMyProfile ? 1.0 : 0.0)
         )
+        .onAppear(perform: {
+            getProfileImage()
+        })
         .sheet(isPresented: $showSettings, content: {
             SettingsView()
                 .preferredColorScheme(colorScheme)
         })
+    }
+    
+    // MARK: FUNCTIONS
+    func getProfileImage() {
+        
+        ImageManager.instance.downloadProfileImage(userID: profileUserID) { returnedImage in
+            if let image = returnedImage {
+                self.profileImage = image
+            }
+        }
+        
     }
 }
 
