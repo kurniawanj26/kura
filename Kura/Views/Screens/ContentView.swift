@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @AppStorage(CurrentUserDefaults.userID) var currentUserID: String?
+    @AppStorage(CurrentUserDefaults.displayName) var currentDisplayName: String?
     
     // String? means it's optional
     // var currentUserID: String? = nil
@@ -42,9 +43,9 @@ struct ContentView: View {
             
             // it's like the conditional render in RN
             ZStack {
-                if currentUserID != nil {
+                if let userID = currentUserID , let displayName = currentDisplayName {
                     NavigationView {
-                        ProfileView(isMyProfile: true, profileUserID: "", profileDisplayName: "My Profile")
+                        ProfileView(isMyProfile: true, profileUserID: userID, profileDisplayName: displayName)
                     }
                 } else {
                     SignUpView()
