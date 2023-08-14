@@ -28,7 +28,7 @@ struct ProfileHeaderView: View {
                 .fontWeight(.bold)
             
             // MARK: BIO
-            Text("King of the pirates.")
+            Text("Hello there.")
                 .font(.body)
                 .fontWeight(.regular)
                 .multilineTextAlignment(.center)

@@ -11,12 +11,14 @@ struct PostView: View {
     
     @State var post: PostModel
     var showHeaderAndFooter: Bool
-    @State var postImage: UIImage = UIImage(named: "dog1")!
     
     @State var animateLike: Bool = false
     @State var addHeartAnimationToView: Bool
     @State var showActionSheet: Bool = false
     @State var actionSheetType: PostActionSheetOption = .general
+    
+    @State var profileImage: UIImage = UIImage(named: "logo.loading")!
+    @State var postImage: UIImage = UIImage(named: "logo.loading")!
     
     enum PostActionSheetOption {
         case general
@@ -31,9 +33,11 @@ struct PostView: View {
                 HStack {
                     
                     NavigationLink(
-                        destination: ProfileView(isMyProfile: false, profileUserID: post.userID, posts: PostArrayObject(userID: post.userID), profileDisplayName: post.username),
+                        destination: LazyView(content: {
+                            ProfileView(isMyProfile: false, profileUserID: post.userID, posts: PostArrayObject(userID: post.userID), profileDisplayName: post.username)
+                        }),
                         label: {
-                            Image("dog1")
+                            Image(uiImage: profileImage)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 30, height: 30, alignment: .center)
@@ -125,6 +129,9 @@ struct PostView: View {
                 }
             }
         })
+        .onAppear() {
+            getImages()
+        }
     }
     
     // MARK: FUNCTIONS
@@ -147,6 +154,23 @@ struct PostView: View {
         let updatedPost = PostModel(postID: post.postID, userID: post.userID, username: post.username, caption: post.caption, dateCreated: post.dateCreated, likeCount: post.likeCount - 1, likedByOwner: false)
         self.post = updatedPost
         
+    }
+    
+    func getImages() {
+        
+        // get profile image
+        ImageManager.instance.downloadProfileImage(userID: post.userID) { returnedImage in
+            if let image = returnedImage {
+                self.profileImage = image
+            }
+        }
+        
+        // get post image
+        ImageManager.instance.downloadPostImage(postID: post.postID) { returnedImage in
+            if let image = returnedImage {
+                self.postImage = image
+            }
+        }
     }
     
     func getActionSheet() -> ActionSheet {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		96A5F7A82B8D2E23151CC978 /* Pods_Kura.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF4684F044994284336072 /* Pods_Kura.framework */; };
+		D912B6E52A8A36CE009B176C /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D912B6E42A8A36CE009B176C /* LazyView.swift */; };
 		D9289D452A8472AE000B3794 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9289D442A8472AE000B3794 /* GoogleService-Info.plist */; };
 		D9289D492A848C11000B3794 /* SignInWithGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9289D482A848C11000B3794 /* SignInWithGoogle.swift */; };
 		D92CE9082A80988E005FD994 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92CE9072A80988E005FD994 /* SettingsView.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		3FAF4684F044994284336072 /* Pods_Kura.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kura.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D912B6E42A8A36CE009B176C /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		D9289D432A841E5C000B3794 /* Kura.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kura.entitlements; sourceTree = "<group>"; };
 		D9289D442A8472AE000B3794 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9289D482A848C11000B3794 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				D943595229A28C4C004FD2C9 /* Extensions.swift */,
 				D9D1BFF32A853D94009CD083 /* Enums & Struct.swift */,
+				D912B6E42A8A36CE009B176C /* LazyView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				D943595729A29189004FD2C9 /* PostView.swift in Sources */,
 				D98A03A92A7E445C005965D5 /* ProfileView.swift in Sources */,
 				D9B1AAD32A68D89300BC7DBB /* BrowseView.swift in Sources */,
+				D912B6E52A8A36CE009B176C /* LazyView.swift in Sources */,
 				D92CE91A2A8201D6005FD994 /* LikeAnimationView.swift in Sources */,
 				D9EC308A2A5D7A300082B392 /* CommentModel.swift in Sources */,
 				D92CE9102A81247F005FD994 /* SettingsEditImageView.swift in Sources */,

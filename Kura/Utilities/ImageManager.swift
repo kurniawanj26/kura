@@ -54,6 +54,18 @@ class ImageManager {
         }
     }
     
+    func downloadPostImage(postID: String, handler: @escaping (_ image: UIImage?) -> ()) {
+        
+        // get the path
+        let path = getPostImagePath(postID: postID)
+        
+        // download the image from path
+        downloadImage(path: path) { returnedImage in
+            handler(returnedImage)
+        }
+        
+    }
+    
     // MARK: PRIVATE FUNCTIONS
     // functions that can be called from this file only
     
