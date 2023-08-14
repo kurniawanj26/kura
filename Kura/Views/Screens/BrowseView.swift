@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BrowseView: View {
     
-    var posts = PostArrayObject()
+    var posts: PostArrayObject
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             CarouselView()
@@ -26,7 +27,7 @@ struct BrowseView_Previews: PreviewProvider {
         // need to wrap the BrowseView
         // so the title shows up
         NavigationView {
-            BrowseView()
+            BrowseView(posts: PostArrayObject(shuffled: true))
         }
     }
 }
