@@ -20,6 +20,8 @@ struct PostView: View {
     @State var profileImage: UIImage = UIImage(named: "logo.loading")!
     @State var postImage: UIImage = UIImage(named: "logo.loading")!
     
+    @AppStorage(CurrentUserDefaults.userID) var currentUserID: String?
+    
     enum PostActionSheetOption {
         case general
         case reporting
@@ -71,6 +73,11 @@ struct PostView: View {
                 Image(uiImage: postImage)
                     .resizable()
                     .scaledToFit()
+                    .onTapGesture(count: 2) {
+                        if !post.likedByOwner {
+                            likePost()
+                        }
+                    }
                 
                 if addHeartAnimationToView {
                     LikeAnimationView(animate: $animateLike)
@@ -136,6 +143,10 @@ struct PostView: View {
     
     // MARK: FUNCTIONS
     func likePost() {
+        guard let userID = currentUserID else {
+            print("Cannot find userID while liking post")
+            return
+        }
         
         // update the local data
         let updatedPost = PostModel(postID: post.postID, userID: post.userID, username: post.username, caption: post.caption, dateCreated: post.dateCreated, likeCount: post.likeCount + 1, likedByOwner: true)
@@ -146,14 +157,23 @@ struct PostView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             animateLike = false
         }
+        
+        // update the database
+        DataService.instance.likePost(postID: post.postID, currentUserID: userID)
     }
     
     func unlikePost() {
+        guard let userID = currentUserID else {
+            print("Cannot find userID while unliking post")
+            return
+        }
         
         // update the local data
         let updatedPost = PostModel(postID: post.postID, userID: post.userID, username: post.username, caption: post.caption, dateCreated: post.dateCreated, likeCount: post.likeCount - 1, likedByOwner: false)
         self.post = updatedPost
         
+        // update the database
+        DataService.instance.unlikePost(postID: post.postID, currentUserID: userID)
     }
     
     func getImages() {
