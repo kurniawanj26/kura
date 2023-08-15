@@ -17,6 +17,7 @@ class DataService {
     static let instance = DataService()
     
     private var REF_POSTS = DB_BASE.collection("posts")
+    private var REF_REPORTS = DB_BASE.collection("reports")
     
     @AppStorage(CurrentUserDefaults.userID) var currentUserID: String?
     
@@ -58,6 +59,54 @@ class DataService {
             } else {
                 print("Error uploading post image to Firebase")
                 handler(false)
+                return
+            }
+        }
+        
+    }
+    
+    func submitReport(reason: String, postID: String, handler: @escaping (_ success: Bool) -> ()) {
+        
+        let data: [String: Any] = [
+            DatabaseReportField.content: reason,
+            DatabaseReportField.postID: postID,
+            DatabaseReportField.dateCreated: FieldValue.serverTimestamp()
+        ]
+        
+        REF_REPORTS.addDocument(data: data) { error in
+            if let error = error {
+                print("Error submitting report: \(error)")
+                handler(false)
+                return
+            } else {
+                print("Success submitting report")
+                handler(true)
+                return
+            }
+        }
+        
+    }
+    
+    func submitComment(postID: String, content: String, displayName: String, userID: String, handler: @escaping (_ success: Bool, _ commentID: String?) -> ()) {
+        
+        let document = REF_POSTS.document(postID).collection(DatabasePostField.comments).document()
+        let commentID = document.documentID
+        
+        let data: [String: Any] = [
+            DatabaseCommentsField.commentID: commentID,
+            DatabaseCommentsField.userID: userID,
+            DatabaseCommentsField.content: content,
+            DatabaseCommentsField.displayName: displayName,
+            DatabaseCommentsField.dateCreated: FieldValue.serverTimestamp()
+        ]
+        
+        document.setData(data) { error in
+            if let error = error {
+                print("Error submitting comment: \(error)")
+                handler(false, nil)
+                return
+            } else {
+                handler(true, commentID)
                 return
             }
         }

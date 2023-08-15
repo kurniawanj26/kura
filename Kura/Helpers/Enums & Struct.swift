@@ -27,6 +27,23 @@ struct DatabasePostField {
     static let dateCreated = "date_created"
     static let likeCount = "like_count" // int
     static let likedBy = "liked_by" // array
+    static let comments = "comments" // sub collection
+}
+
+// Fields for comments sub collection of a post document in firebase
+struct DatabaseCommentsField {
+    static let commentID = "comment_id"
+    static let displayName = "display_name"
+    static let userID = "user_id"
+    static let content = "content"
+    static let dateCreated = "date_created"
+}
+
+// Fields for report data
+struct DatabaseReportField {
+    static let content = "content"
+    static let postID = "post_id"
+    static let dateCreated = "date_created"    
 }
 
 // Fields for UserDefaults

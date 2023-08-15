@@ -22,6 +22,11 @@ struct PostView: View {
     
     @AppStorage(CurrentUserDefaults.userID) var currentUserID: String?
     
+    // alerts
+    @State var alertTitle: String = ""
+    @State var alertMessage: String = ""
+    @State var showAlert: Bool = false
+    
     enum PostActionSheetOption {
         case general
         case reporting
@@ -103,7 +108,7 @@ struct PostView: View {
                     .accentColor(post.likedByOwner ? .red : .primary )
                     
                     // MARK: COMMENT ICON
-                    NavigationLink(destination: CommentsView(), label:  {
+                    NavigationLink(destination: CommentsView(post: post), label:  {
                         Image(systemName: "bubble.middle.bottom")
                             .font(.title3)
                             .foregroundColor(.primary)
@@ -138,6 +143,9 @@ struct PostView: View {
         })
         .onAppear() {
             getImages()
+        }
+        .alert(isPresented: $showAlert) {
+            return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
     }
     
@@ -238,6 +246,18 @@ struct PostView: View {
     
     func reportPost(reason: String) {
         print("REPORT POST")
+        
+        DataService.instance.submitReport(reason: reason, postID: post.postID) { success in
+            if success {
+                self.alertTitle = "Reported!"
+                self.alertMessage = "Thank you for reporting this post. We will review it and take the appropriate action!"
+                self.showAlert.toggle()
+            } else {
+                self.alertTitle = "Error"
+                self.alertMessage = "There was an error while submitting the report. Please try again."
+                self.showAlert.toggle()
+            }
+        }
     }
     
     func sharePost() {
