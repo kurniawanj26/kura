@@ -80,14 +80,27 @@ struct CommentsView: View {
     
     func getComments() {
         
+        // to make sure the array is empty, if so it'll continue to the rest of the function
+        // false, return out
+        guard self.commentArray.isEmpty else { return }
+        
         print("GET COMMENTS FROM DB")
         
-        let comment1 = CommentModel(commentID: "", userID: "", username: "Zoro", content: "I will pet you", dateCreated: Date())
-        let comment2 = CommentModel(commentID: "", userID: "", username: "Sanji", content: "I will feed you", dateCreated: Date())
+        // DUMMY COMMENTS
+        // let comment1 = CommentModel(commentID: "", userID: "", username: "Zoro", content: "I will pet you", dateCreated: Date())
+        // let comment2 = CommentModel(commentID: "", userID: "", username: "Sanji", content: "I will feed you", dateCreated: Date())
         
-        self.commentArray.append(comment1)
-        self.commentArray.append(comment2 )
+        // self.commentArray.append(comment1)
+        // self.commentArray.append(comment2 )
         
+        if let caption = post.caption, caption.count > 1 {
+            let captionComment = CommentModel(commentID: "", userID: post.userID, username: post.username, content: caption, dateCreated: post.dateCreated)
+            self.commentArray.append(captionComment)
+        }
+        
+        DataService.instance.downloadComments(postID: post.postID) { returnedComments in
+            self.commentArray.append(contentsOf: returnedComments)
+        }
     }
     
     func textIsAppropriate() -> Bool {
