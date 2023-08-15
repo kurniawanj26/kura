@@ -108,7 +108,7 @@ struct PostView: View {
                     .accentColor(post.likedByOwner ? .red : .primary )
                     
                     // MARK: COMMENT ICON
-                    NavigationLink(destination: CommentsView(), label:  {
+                    NavigationLink(destination: CommentsView(post: post), label:  {
                         Image(systemName: "bubble.middle.bottom")
                             .font(.title3)
                             .foregroundColor(.primary)

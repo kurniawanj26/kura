@@ -87,6 +87,32 @@ class DataService {
         
     }
     
+    func submitComment(postID: String, content: String, displayName: String, userID: String, handler: @escaping (_ success: Bool, _ commentID: String?) -> ()) {
+        
+        let document = REF_POSTS.document(postID).collection(DatabasePostField.comments).document()
+        let commentID = document.documentID
+        
+        let data: [String: Any] = [
+            DatabaseCommentsField.commentID: commentID,
+            DatabaseCommentsField.userID: userID,
+            DatabaseCommentsField.content: content,
+            DatabaseCommentsField.displayName: displayName,
+            DatabaseCommentsField.dateCreated: FieldValue.serverTimestamp()
+        ]
+        
+        document.setData(data) { error in
+            if let error = error {
+                print("Error submitting comment: \(error)")
+                handler(false, nil)
+                return
+            } else {
+                handler(true, commentID)
+                return
+            }
+        }
+        
+    }
+    
     // MARK: GET FUNCTIONS
     
     func downloadPostForUser(userID: String, handler: @escaping(_ posts: [PostModel]) ->()) {
