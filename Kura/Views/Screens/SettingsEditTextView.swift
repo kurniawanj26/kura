@@ -7,14 +7,26 @@
 
 import SwiftUI
 
+enum SettingsEditTextOption {
+    case displayName
+    case bio
+}
+
 struct SettingsEditTextView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     
     @State var submissionText: String = ""
     @State var title: String
     @State var description: String
     @State var placeholder: String
+    @State var settingEditTextOption: SettingsEditTextOption
+    @Binding var profileText: String
+    
+    @AppStorage(CurrentUserDefaults.userID) var currentUserID: String?
+    
+    @State var showSuccessAlert: Bool = false
     
     var body: some View {
         VStack {
@@ -35,7 +47,9 @@ struct SettingsEditTextView: View {
                 .autocapitalization(.sentences)
             
             Button(action: {
-                
+                if textIsAppropriate() {
+                    saveText()
+                }
             }, label: {
                 Text("Save".uppercased())
                     .font(.title3)
@@ -54,13 +68,72 @@ struct SettingsEditTextView: View {
         .padding()
         .frame(maxWidth: .infinity)
         .navigationBarTitle(title)
+        .alert(isPresented: $showSuccessAlert) {
+            return Alert(title: Text("Saved ✅"), message: nil, dismissButton: .default(Text("OK"), action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }))
+        }
+    }
+    
+    // MARK: FUNCTIONS
+    func textIsAppropriate() -> Bool {
+        // check if text has curses or toxic words
+        // check if the text is too short
+        // check if the text is blank
+        
+        let badwordArray: [String] = ["shit", "ass", "fuck"]
+        
+        let words = submissionText.components(separatedBy: " ")
+        
+        for word in words {
+            if badwordArray.contains(word) {
+                return false
+            }
+        }
+        
+        if submissionText.count < 4 {
+            return false
+        }
+        
+        return true
+    }
+
+    func saveText() {
+        
+        guard let userID = currentUserID else { return }
+        
+        switch settingEditTextOption {
+        case .displayName:
+            
+            // update the UI on profile view
+            self.profileText = submissionText
+            
+            // update the user default
+            UserDefaults.standard.set(submissionText, forKey: CurrentUserDefaults.displayName)
+            
+            // update on all of the user's posts
+            DataService.instance.updateDisplayNameOnPosts(userID: userID, displayName: submissionText)
+            
+            // update on user profile in database
+            AuthService.instance.updateUserDisplayName(userID: userID, displayName: submissionText) { success in
+                if success {
+                    self.showSuccessAlert.toggle()
+                }
+            }
+            break
+        case .bio:
+            break
+        }
     }
 }
 
 struct SettingsEditTextView_Previews: PreviewProvider {
+    
+    @State static var text: String = ""
+    
     static var previews: some View {
         NavigationView {
-            SettingsEditTextView(title: "Title", description: "Description", placeholder: "Placeholder")
+            SettingsEditTextView(title: "Title", description: "Description", placeholder: "Placeholder", settingEditTextOption: .displayName, profileText: $text)
         }
     }
 }

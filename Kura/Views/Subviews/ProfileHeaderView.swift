@@ -11,6 +11,7 @@ struct ProfileHeaderView: View {
     
     @Binding var profileDisplayName: String
     @Binding var profileImage: UIImage
+    @Binding var profileBio: String
     
     /*  ObservedObject :
         A property wrapper type that subscribes to an observable object
@@ -34,10 +35,13 @@ struct ProfileHeaderView: View {
                 .fontWeight(.bold)
             
             // MARK: BIO
-            Text("Hello there.")
-                .font(.body)
-                .fontWeight(.regular)
-                .multilineTextAlignment(.center)
+            if profileBio != "" {
+                Text(profileBio)
+                    .font(.body)
+                    .fontWeight(.regular)
+                    .multilineTextAlignment(.center)
+                
+            }
             
             HStack(alignment: .center, spacing: nil, content: {
                 
@@ -84,7 +88,7 @@ struct ProfileHeaderView_Previews: PreviewProvider {
     @State static var image: UIImage = UIImage(named: "dog1")!
     
     static var previews: some View {
-        ProfileHeaderView(profileDisplayName: $name, profileImage: $image, postArray: PostArrayObject(shuffled: false))
+        ProfileHeaderView(profileDisplayName: $name, profileImage: $image, profileBio: $name, postArray: PostArrayObject(shuffled: false))
             .previewLayout(.sizeThatFits)
     }
 }
