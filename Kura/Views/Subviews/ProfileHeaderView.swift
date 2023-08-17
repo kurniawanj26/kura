@@ -12,6 +12,12 @@ struct ProfileHeaderView: View {
     @Binding var profileDisplayName: String
     @Binding var profileImage: UIImage
     
+    /*  ObservedObject :
+        A property wrapper type that subscribes to an observable object
+        and invalidates a view whenever the observable object changes.
+    */
+    @ObservedObject var postArray: PostArrayObject
+    
     var body: some View {
         VStack(alignment: .center, spacing: 10, content: {
             
@@ -37,8 +43,7 @@ struct ProfileHeaderView: View {
                 
                 // MARK: POSTS
                 VStack(alignment: .center, spacing: 5, content:  {
-                
-                    Text("4")
+                    Text(postArray.postCountString)
                         .font(.title2)
                         .fontWeight(.bold)
                     
@@ -54,7 +59,7 @@ struct ProfileHeaderView: View {
                 // MARK: LIKES
                 VStack(alignment: .center, spacing: 5, content:  {
                 
-                    Text("200")
+                    Text(postArray.likeCountString)
                         .font(.title2)
                         .fontWeight(.bold)
                     
@@ -79,7 +84,7 @@ struct ProfileHeaderView_Previews: PreviewProvider {
     @State static var image: UIImage = UIImage(named: "dog1")!
     
     static var previews: some View {
-        ProfileHeaderView(profileDisplayName: $name, profileImage: $image)
+        ProfileHeaderView(profileDisplayName: $name, profileImage: $image, postArray: PostArrayObject(shuffled: false))
             .previewLayout(.sizeThatFits)
     }
 }
