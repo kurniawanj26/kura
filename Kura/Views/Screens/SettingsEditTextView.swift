@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum SettingsEditTextOption {
-    case displayName
-    case bio
-}
-
 struct SettingsEditTextView: View {
     
     @Environment(\.presentationMode) var presentationMode
@@ -120,9 +115,22 @@ struct SettingsEditTextView: View {
                     self.showSuccessAlert.toggle()
                 }
             }
-            break
+
         case .bio:
-            break
+            
+            // update the UI on profile view
+            self.profileText = submissionText
+            
+            // update the user default
+            UserDefaults.standard.set(submissionText, forKey: CurrentUserDefaults.bio)
+            
+            // update on user profile in database
+            
+            AuthService.instance.updateUserBio(userID: userID, bio: submissionText) { success in
+                if success {
+                    self.showSuccessAlert.toggle()
+                }
+            }
         }
     }
 }
