@@ -14,6 +14,9 @@ struct SettingsView: View {
     
     @State var showSignOutError: Bool = false
     
+    @Binding var userDisplayName: String
+    @Binding var userBio: String
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false, content: {
@@ -39,17 +42,20 @@ struct SettingsView: View {
                 GroupBox(label: SettingsLabelView(labelText: "Profile", labelImage: "person.fill"), content: {
                     
                     // DISPLAY NAME
-                    NavigationLink(destination: SettingsEditTextView(submissionText: "Current display name", title: "Display name", description: "Put your display name here. This will be seen by other user.", placeholder: "Your display name here..."), label: {
+                    NavigationLink(
+                        destination: SettingsEditTextView(submissionText: userDisplayName, title: "Display name", description: "Put your display name here. This will be seen by other user.", placeholder: "Your display name here...", settingEditTextOption: .displayName, profileText: $userDisplayName), label: {
                         SettingsRowView(leftIcon: "pencil", text: "Display Name", color: Color.MyTheme.purpleColor)
                     })
                     
                     // BIO
-                    NavigationLink(destination: SettingsEditTextView(submissionText: "Current bio here", title: "Profile Bio", description: "Your bio is a great place to let other user know a little about you. It will be shown on your profile only.", placeholder: "Your bio here..."), label: {
+                    NavigationLink(
+                        destination: SettingsEditTextView(submissionText: userBio, title: "Profile Bio", description: "Your bio is a great place to let other user know a little about you. It will be shown on your profile only.", placeholder: "Your bio here...", settingEditTextOption: .bio, profileText: $userBio), label: {
                         SettingsRowView(leftIcon: "text.quote", text: "Bio", color: Color.MyTheme.purpleColor)
                     })
                     
                     // PROFILE PICTURE
-                    NavigationLink(destination: SettingsEditImageView(title: "Profile Picture", description: "Your picture picture will be shown on your profile and on your posts.", selectedImage: UIImage(named: "dog1")!), label: {
+                    NavigationLink(
+                        destination: SettingsEditImageView(title: "Profile Picture", description: "Your picture picture will be shown on your profile and on your posts.", selectedImage: UIImage(named: "dog1")!), label: {
                         SettingsRowView(leftIcon: "photo", text: "Profile Picture", color: Color.MyTheme.purpleColor)
                     })
                     
@@ -136,7 +142,10 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
+    
+    @State static var testString: String = ""
+    
     static var previews: some View {
-        SettingsView()
+        SettingsView(userDisplayName: $testString, userBio: $testString)
     }
 }
