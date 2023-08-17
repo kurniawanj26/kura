@@ -11,6 +11,8 @@ class PostArrayObject: ObservableObject {
     
     // @Published to create object that will be WATCHED
     @Published var dataArray = [PostModel]()
+    @Published var postCountString = "0"
+    @Published var likeCountString = "0"
     
     // var dataArray = [PostModel]() --> to create a blank array of PostModel
     
@@ -30,6 +32,7 @@ class PostArrayObject: ObservableObject {
                 return post1.dateCreated > post2.dateCreated
             }
             self.dataArray.append(contentsOf: sortedPosts)
+            self.updateCount()
         }
         
     }
@@ -47,5 +50,19 @@ class PostArrayObject: ObservableObject {
             }
         }
         
+    }
+    
+    func updateCount() {
+        
+        // post
+        self.postCountString = "\(self.dataArray.count)"
+        
+        // like
+        let likeCountArray = dataArray.map { existingPost -> Int in
+            return existingPost.likeCount
+        }
+        
+        let sumOfLikeCountArray = likeCountArray.reduce(0, +)
+        self.likeCountString = "\(sumOfLikeCountArray)"
     }
 }
