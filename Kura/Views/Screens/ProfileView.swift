@@ -43,7 +43,7 @@ struct ProfileView: View {
             getProfileImage()
         })
         .sheet(isPresented: $showSettings, content: {
-            SettingsView(userDisplayName: $profileDisplayName, userBio: $profileBio)
+            SettingsView(userDisplayName: $profileDisplayName, userBio: $profileBio, userProfilePicture: $profileImage)
                 .preferredColorScheme(colorScheme)
         })
     }
