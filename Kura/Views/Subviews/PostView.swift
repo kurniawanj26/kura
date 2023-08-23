@@ -81,6 +81,7 @@ struct PostView: View {
                     .onTapGesture(count: 2) {
                         if !post.likedByOwner {
                             likePost()
+                            AnalyticsService.instance.likePostDoubleTap()
                         }
                     }
                 
@@ -100,6 +101,7 @@ struct PostView: View {
                         } else {
                             // like the post
                             likePost()
+                            AnalyticsService.instance.likePostHeartPressed()
                         }
                     }, label: {
                         Image(systemName: post.likedByOwner ? "heart.fill" : "heart")
