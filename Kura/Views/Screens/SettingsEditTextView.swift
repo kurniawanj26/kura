@@ -23,6 +23,9 @@ struct SettingsEditTextView: View {
     
     @State var showSuccessAlert: Bool = false
     
+    // phone vibrations
+    let haptics = UINotificationFeedbackGenerator()
+    
     var body: some View {
         VStack {
             
@@ -65,12 +68,18 @@ struct SettingsEditTextView: View {
         .navigationBarTitle(title)
         .alert(isPresented: $showSuccessAlert) {
             return Alert(title: Text("Saved ✅"), message: nil, dismissButton: .default(Text("OK"), action: {
-                self.presentationMode.wrappedValue.dismiss()
+               dismissView()
             }))
         }
     }
     
     // MARK: FUNCTIONS
+    
+    func dismissView() {
+        self.haptics.notificationOccurred(.success)
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
     func textIsAppropriate() -> Bool {
         // check if text has curses or toxic words
         // check if the text is too short
