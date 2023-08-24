@@ -23,69 +23,73 @@ class ImageManager {
     // functions that can be called from other places in the app
     
     func uploadProfileImage(userID: String, image: UIImage) {
-        
         // get the path where we will save the image
         let path = getProfileImagePath(userID: userID)
         
         // save image
-        uploadImage(path: path, image: image) { (_) in }
-        
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.uploadImage(path: path, image: image) { (_) in }
+        }
     }
     
     func uploadPostImage(postID: String, image: UIImage, handler: @escaping (_ success: Bool) -> ()) {
-        
         // get the path where we will save the image
         let path = getPostImagePath(postID: postID)
         
         // save image
-        uploadImage(path: path, image: image) { success in
-            handler(success)
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.uploadImage(path: path, image: image) { success in
+                DispatchQueue.main.async {
+                    handler(success)
+                }
+            }
         }
     }
     
     func downloadProfileImage(userID: String, handler: @escaping (_ image: UIImage?) -> ()) {
-        
         // get the path
         let path = getProfileImagePath(userID: userID)
         
         // download the image from path
-        downloadImage(path: path) { returnedImage in
-            handler(returnedImage)
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.downloadImage(path: path) { returnedImage in
+                DispatchQueue.main.async {
+                    handler(returnedImage)
+                }
+            }
         }
     }
     
     func downloadPostImage(postID: String, handler: @escaping (_ image: UIImage?) -> ()) {
-        
         // get the path
         let path = getPostImagePath(postID: postID)
         
         // download the image from path
-        downloadImage(path: path) { returnedImage in
-            handler(returnedImage)
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.downloadImage(path: path) { returnedImage in
+                DispatchQueue.main.async {
+                    handler(returnedImage)
+                }
+            }
         }
-        
     }
     
     // MARK: PRIVATE FUNCTIONS
     // functions that can be called from this file only
     
     private func getProfileImagePath(userID: String) -> StorageReference {
-        
         let userPath = "users/\(userID)/profile"
         let storagePath = REF_STORE.reference(withPath: userPath)
         return storagePath
-        
     }
     
     private func getPostImagePath(postID: String) -> StorageReference {
-        
         let postPath = "posts/\(postID)/1"
         let storagePath = REF_STORE.reference(withPath: postPath)
         return storagePath
     }
     
     private func uploadImage(path: StorageReference, image: UIImage, handler: @escaping(_ success: Bool) ->()) {
-        
         var compression: CGFloat = 1.0
         let maxFileSize: Int = 240 * 240 // max file size
         let maxCompression: CGFloat = 0.05 // max file compression
